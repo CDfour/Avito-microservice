@@ -5,7 +5,7 @@
 
 Инструкция по запуску
 ---------------------
-![](https://ibb.co/TTHwTSk)
+![]([https://ibb.co/TTHwTSk](https://ibb.co/TTHwTSk))
 
 
 Описание эндпоинтов:
