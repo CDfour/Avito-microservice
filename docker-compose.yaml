@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  pg:
+    image: postgres:14.4-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: service_user
+    ports:
+     - 7432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data    
+
+  app:
+    build: .
+    ports:
+    -  9000:8080
+    depends_on:
+      - pg
+
+volumes:
+  postgres:

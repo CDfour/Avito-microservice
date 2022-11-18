@@ -1,0 +1,278 @@
+basePath: /
+definitions:
+  api.message:
+    properties:
+      message:
+        type: string
+    type: object
+  model.History:
+    properties:
+      cost:
+        type: number
+      orderDate:
+        type: string
+      serviceName:
+        type: string
+      userID:
+        type: string
+    type: object
+  model.User:
+    properties:
+      dateCreate:
+        type: string
+      funds:
+        type: number
+      id:
+        type: string
+      lastUpdate:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: biv_1998@mail.ru
+    name: Ilya
+  title: Microservice for working with user balance
+  version: "1.0"
+paths:
+  /balance:
+    get:
+      description: Предоставляет информацию о пользователе
+      parameters:
+      - description: UserID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.message'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.message'
+      summary: Balance
+      tags:
+      - balance
+    post:
+      consumes:
+      - application/json
+      description: Начисляет пользователю средства, регистрирует его
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.message'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.message'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.message'
+      summary: Enrollment
+      tags:
+      - balance
+  /history:
+    post:
+      description: Предоставляет историю заказов пользователя
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.History'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.message'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.message'
+      summary: History
+      tags:
+      - report
+  /order:
+    post:
+      consumes:
+      - application/json
+      description: Заказ пользователем услуги
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.message'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.message'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.message'
+      summary: Order
+      tags:
+      - order
+  /order/failed:
+    post:
+      consumes:
+      - application/json
+      description: Услуга не была оказана
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.message'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.message'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.message'
+      summary: Failed order
+      tags:
+      - order
+  /order/success:
+    post:
+      consumes:
+      - application/json
+      description: Успешное выполнение услуги
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.message'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.message'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.message'
+      summary: Success order
+      tags:
+      - order
+  /report:
+    post:
+      consumes:
+      - application/json
+      description: Предоставляет ссылку на месячный отчет по пользователям
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.message'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.message'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.message'
+      summary: Report
+      tags:
+      - report
+  /report/csv:
+    get:
+      description: Предоставляет месячный отчет по пользователям
+      parameters:
+      - description: file ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.message'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.message'
+      summary: CsvReport
+      tags:
+      - report
+  /transfer:
+    post:
+      consumes:
+      - application/json
+      description: Перевод средств от пользователя к пользователю
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.message'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.message'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.message'
+      summary: Transfer
+      tags:
+      - balance
+swagger: "2.0"
